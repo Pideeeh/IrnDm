@@ -18,7 +18,7 @@ public class AWeapon : MonoBehaviour {
     private bool isEquiped = false;
     private bool isReloading = false;
 
-    private AudioSource WeaponAudioSource;
+    protected AudioSource WeaponAudioSource;
 
     // Use this for initialization
     void Start() {
@@ -63,7 +63,7 @@ public class AWeapon : MonoBehaviour {
     }
 
     protected virtual void LaunchProjectile() {
-        AProjectile projectile = InstantiateProjectile(GetAimVector());
+        AProjectile projectile = InstantiateProjectile(gameObject.transform.position);
         projectile.GetComponent<Rigidbody>().velocity = GetComponentInParent<Camera>().transform.forward * projectile.Speed;
     }
 
@@ -73,8 +73,7 @@ public class AWeapon : MonoBehaviour {
 
     protected Vector3 GetAimVector()
     {
-        //Swap with getting 
-        return gameObject.transform.position;
+        return GetComponentInParent<Camera>().transform.forward;
     }
 
     public void Equip() {

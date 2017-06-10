@@ -21,13 +21,15 @@ public class PlayerBehaviour : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-        if (Input.GetMouseButtonDown(0))
+        if (Input.GetMouseButtonUp(0)) { 
             FireRight();
             Debug.Log("Pressed left click.");
-
-        if (Input.GetMouseButtonDown(1))
+        }
+        if (Input.GetMouseButtonUp(1))
+        {
             //Fire right
             Debug.Log("Pressed right click.");
+        }
     }
 
     private void FireLeft() {
@@ -48,7 +50,6 @@ public class PlayerBehaviour : MonoBehaviour {
             EquippedWeaponRight.Equip();
         }
     }
-
 
     public void PickUpWeapon(AWeapon weapon)
     {

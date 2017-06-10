@@ -1,8 +1,9 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class MenuBrick : MonoBehaviour {
+public class MenuBrick : MonoBehaviour, IRayTarget {
 
     public float FloatingSpeed;
     public float Amplitude;
@@ -24,5 +25,10 @@ public class MenuBrick : MonoBehaviour {
     }
     public void ChangeDisplayText(string text) {
         GetComponentInChildren<TextMesh>().text = text;
+    }
+
+    public void RayHit()
+    {
+        FindObjectOfType<MenuController>().MenuItemHit(this.itemType);
     }
 }

@@ -10,8 +10,8 @@ public class HitscanWeapon : AWeapon {
 
 	// Use this for initialization
 	void Start () {
-		
-	}
+        WeaponAudioSource = gameObject.GetComponent<AudioSource>();
+    }
 	
 	// Update is called once per frame
 	void Update () {
@@ -22,26 +22,29 @@ public class HitscanWeapon : AWeapon {
     {
         for (int i = 0; i < PelletAmount; i++)
         {
-            //Maybe override Instantiate with Raycasts
-            InstantiateProjectile(Spread(GetAimVector()));
+            CastRay();
         }
     }
 
-    private void CastRay(Vector3 direction) {
-        Physics.Raycast(gameObject.transform.position, Spread(GetAimVector()));
+    private void CastRay() {
+        Vector3 RayVector = Spread(GetAimVector());
+        Ray ray = new Ray(gameObject.transform.position, RayVector);
+        RaycastHit hit;
+        if (Physics.Raycast(ray,out hit,Mathf.Infinity))
+        {
+            IRayTarget target = hit.collider.gameObject.GetComponent<IRayTarget>();
+            if (target != null)
+            {
+                target.RayHit();
+            }
+        }
     }
 
-    private Vector3 Spread(Vector3 aim) {
-        //Probably needs to be swapped out with a GaussianSpread
-
+    private Vector3 Spread(Vector3 aim)
+    {
         aim.Normalize();
-        Vector3 v3;
-        do
-        {
-            v3 = UnityEngine.Random.insideUnitCircle;
-        } while (v3 == aim ||v3 == -aim);
-        v3 = Vector3.Cross(aim, v3);
-        v3 *= UnityEngine.Random.Range(0f, Scattering);
-        return aim + v3;
+        Quaternion v = new Quaternion(aim.x, aim.y, aim.z, Mathf.Cos(UnityEngine.Random.Range(0f, 2 * Mathf.PI)));
+        Vector3 point = new Vector3(aim.x + UnityEngine.Random.Range(0f, Scattering), aim.y, aim.z);
+        return v * point;
     }
 }
