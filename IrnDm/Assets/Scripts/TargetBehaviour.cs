@@ -26,6 +26,7 @@ public class TargetBehaviour : MonoBehaviour , IRayTarget{
         {
             FindObjectOfType<GameController>().IncScore();
         }
+        FireDestroyParticleSystem();
         Destroy(gameObject);
 
     }
@@ -33,10 +34,11 @@ public class TargetBehaviour : MonoBehaviour , IRayTarget{
     public void RayHit()
     {
         FindObjectOfType<GameController>().IncScore();
+        FireDestroyParticleSystem();
         Destroy(gameObject);
     }
 
-    private void OnDestroy()
+    private void FireDestroyParticleSystem()
     {
         if (ExplosionPrefab != null)
         {
