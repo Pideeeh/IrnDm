@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class TargetBehaviour : MonoBehaviour {
 
+    public GameObject ExplosionPrefab;
+
 	// Use this for initialization
 	void Start () {
 		
@@ -23,6 +25,11 @@ public class TargetBehaviour : MonoBehaviour {
         {
             FindObjectOfType<GameController>().IncScore();
         }
-            Destroy(gameObject);
+        if (ExplosionPrefab != null)
+        {
+            GameObject particleSystem = Instantiate(ExplosionPrefab, gameObject.transform.position, Quaternion.identity);
+            Destroy(particleSystem, particleSystem.GetComponent<ParticleSystem>().main.duration-0.2f);
+        }   
+        Destroy(gameObject);
     }
 }

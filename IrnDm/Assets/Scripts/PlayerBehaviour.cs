@@ -22,7 +22,7 @@ public class PlayerBehaviour : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
         if (Input.GetMouseButtonDown(0))
-            //Fire left
+            FireRight();
             Debug.Log("Pressed left click.");
 
         if (Input.GetMouseButtonDown(1))
@@ -34,10 +34,7 @@ public class PlayerBehaviour : MonoBehaviour {
         EquippedWeaponLeft.Fire();
         if (EquippedWeaponLeft.IsEmpty())
         {
-            while (!EquippedWeaponLeft.UnEquip())
-            {
-
-            }
+            EquippedWeaponLeft.UnEquip();
             EquippedWeaponLeft = DefaultWeapon;
             EquippedWeaponLeft.Equip();
         }
@@ -46,10 +43,7 @@ public class PlayerBehaviour : MonoBehaviour {
         EquippedWeaponRight.Fire();
         if (EquippedWeaponRight.IsEmpty())
         {
-            while (!EquippedWeaponRight.UnEquip())
-            {
-
-            }
+            EquippedWeaponRight.UnEquip();
             EquippedWeaponRight = DefaultWeapon;
             EquippedWeaponRight.Equip();
         }

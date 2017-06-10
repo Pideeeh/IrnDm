@@ -5,6 +5,7 @@ using UnityEngine;
 public class TargetSpawner : MonoBehaviour {
 
     public float SpawnSpeed;
+    public float Radius;
 
     public GameObject Target;
 
@@ -29,21 +30,14 @@ public class TargetSpawner : MonoBehaviour {
     IEnumerator MakeObject()
     {
         readyNow = false;
-        //Debug.Log("Spawn");
-        int SpawnDistance = Random.Range(15, 30);
-        float SpawnAngel = NDistribution(0, Mathf.PI / 2);
-        float FacingAngel = Random.Range(0.7f, 1.2f);
-        Vector3 SpawnDirection = new Vector3(Mathf.Cos(SpawnAngel), 0, Mathf.Sin(SpawnAngel));
-        //int rotation = (int)(Mathf.Sign(SpawnDirection.x) * Mathf.Sign(SpawnDirection.z));
-        Instantiate(Target, SpawnDirection * SpawnDistance + new Vector3(0, 4, 0), new Quaternion(SpawnDirection.z, 0, -SpawnDirection.x, Mathf.Cos(FacingAngel)));
+        int SpawnDistance = (int)Random.Range(Radius, 15.0f+Radius);
+        float SpawnAngle = NDistribution(0, Mathf.PI / 2);
+        float FacingAngle = Random.Range(0.7f, 1.2f);
+        Vector3 SpawnDirection = new Vector3(Mathf.Cos(SpawnAngle), 0, Mathf.Sin(SpawnAngle));
+        GameObject targetInstance = Instantiate(Target, SpawnDirection * SpawnDistance + new Vector3(0, 4, 0), new Quaternion(SpawnDirection.z, 0, -SpawnDirection.x, Mathf.Cos(FacingAngle)));
+        targetInstance.GetComponent<Rigidbody>().AddForce(targetInstance.transform.up * -50, ForceMode.Impulse);
         yield return new WaitForSecondsRealtime(SpawnSpeed);
         readyNow = true;
-    }
-
-
-    Transform NextSpawnPosition() {
-        //Add logic for random spawn
-        return gameObject.transform;
     }
 
     public void StartSpawning(int difficulty) {

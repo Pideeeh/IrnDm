@@ -22,7 +22,7 @@ public class ProjectileBehaviour : MonoBehaviour {
         if (particleSystemPrefab != null)
         {
             GameObject particleSystem = Instantiate(particleSystemPrefab, gameObject.transform.position,Quaternion.identity);
-            Destroy(particleSystem,5);
+            Destroy(particleSystem, particleSystem.GetComponent<ParticleSystem>().main.duration);
         }
         Destroy(gameObject);
     }

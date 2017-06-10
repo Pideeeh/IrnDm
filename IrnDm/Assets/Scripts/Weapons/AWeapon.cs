@@ -41,33 +41,34 @@ public class AWeapon : MonoBehaviour {
                 }
                 else
                 {
-                    WeaponAudioSource.PlayOneShot(NotCooledDown);
+                    PlaySound(NotCooledDown);
                 }
             }
             else
             {
-                WeaponAudioSource.PlayOneShot(EmptySound);
+                PlaySound(EmptySound);
             }
         }
     }
 
     IEnumerator FireProjectile()
     {
-        WeaponAudioSource.PlayOneShot(FireSound);
+        PlaySound(FireSound);
         LaunchProjectile();
         Ammo--;
-        WeaponAudioSource.PlayOneShot(ReloadSound);
+        PlaySound(ReloadSound);
         isReloading = true;
         yield return new WaitForSeconds(CoolDown);
         isReloading = false;
     }
 
     protected virtual void LaunchProjectile() {
-        InstantiateProjectile(GetAimVector());
+        AProjectile projectile = InstantiateProjectile(GetAimVector());
+        projectile.GetComponent<Rigidbody>().velocity = GetComponentInParent<Camera>().transform.forward * projectile.Speed;
     }
 
-    protected void InstantiateProjectile(Vector3 direction) {
-        Instantiate(Projectile,direction, Quaternion.identity);
+    protected AProjectile InstantiateProjectile(Vector3 direction) {
+       return Instantiate(Projectile,direction, Quaternion.identity);
     }
 
     protected Vector3 GetAimVector()
@@ -77,7 +78,7 @@ public class AWeapon : MonoBehaviour {
     }
 
     public void Equip() {
-        WeaponAudioSource.PlayOneShot(EquipSound);
+        PlaySound(EquipSound);
         isEquiped = true;
     }
 
@@ -91,7 +92,14 @@ public class AWeapon : MonoBehaviour {
 
     public bool IsEmpty()
     {
-        return Ammo > 0 || Infinite;
+        return !(Ammo > 0 || Infinite);
+    }
+
+    private void PlaySound(AudioClip clip) {
+        if (clip != null)
+        {
+            WeaponAudioSource.PlayOneShot(clip);
+        }
     }
 
 
