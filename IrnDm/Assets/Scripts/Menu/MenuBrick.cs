@@ -9,7 +9,6 @@ public class MenuBrick : MonoBehaviour, IRayTarget {
     public float Amplitude;
     public MenuItemType itemType;
 
-
 	// Use this for initialization
 	void Start () {
 	}

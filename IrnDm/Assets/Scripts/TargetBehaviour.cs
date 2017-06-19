@@ -7,6 +7,8 @@ public class TargetBehaviour : MonoBehaviour , IRayTarget{
 
     public GameObject ExplosionPrefab;
 
+    private bool isHitByRay = false;
+
 	// Use this for initialization
 	void Start () {
 		
@@ -33,9 +35,13 @@ public class TargetBehaviour : MonoBehaviour , IRayTarget{
 
     public void RayHit()
     {
-        FindObjectOfType<GameController>().IncScore();
-        FireDestroyParticleSystem();
-        Destroy(gameObject);
+        if (!isHitByRay)
+        {
+            FindObjectOfType<GameController>().IncScore();
+            FireDestroyParticleSystem();
+            isHitByRay = true;
+            Destroy(gameObject);
+        }
     }
 
     private void FireDestroyParticleSystem()

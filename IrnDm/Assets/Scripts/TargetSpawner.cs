@@ -6,6 +6,7 @@ public class TargetSpawner : MonoBehaviour {
 
     public float SpawnSpeed;
     public float Radius;
+    public float LaunchPower;
 
     public GameObject Target;
 
@@ -35,7 +36,7 @@ public class TargetSpawner : MonoBehaviour {
         float FacingAngle = Random.Range(0.7f, 1.2f);
         Vector3 SpawnDirection = new Vector3(Mathf.Cos(SpawnAngle), 0, Mathf.Sin(SpawnAngle));
         GameObject targetInstance = Instantiate(Target, SpawnDirection * SpawnDistance + new Vector3(0, 4, 0), new Quaternion(SpawnDirection.z, 0, -SpawnDirection.x, Mathf.Cos(FacingAngle)));
-        targetInstance.GetComponent<Rigidbody>().AddForce(targetInstance.transform.up * -50, ForceMode.Impulse);
+        targetInstance.GetComponent<Rigidbody>().AddForce(targetInstance.transform.up * -LaunchPower, ForceMode.Impulse);
         yield return new WaitForSecondsRealtime(SpawnSpeed);
         readyNow = true;
     }

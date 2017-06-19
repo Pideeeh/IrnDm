@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class ProjectileBehaviour : MonoBehaviour {
 
-    public GameObject particleSystemPrefab;
+    public GameObject explosionParticle;
 
 
 	// Use this for initialization
@@ -19,9 +19,9 @@ public class ProjectileBehaviour : MonoBehaviour {
 
     public void OnCollisionEnter(Collision collision)
     {
-        if (particleSystemPrefab != null)
+        if (explosionParticle != null)
         {
-            GameObject particleSystem = Instantiate(particleSystemPrefab, gameObject.transform.position,Quaternion.identity);
+            GameObject particleSystem = Instantiate(explosionParticle, gameObject.transform.position,Quaternion.identity);
             Destroy(particleSystem, particleSystem.GetComponent<ParticleSystem>().main.duration);
         }
         Destroy(gameObject);

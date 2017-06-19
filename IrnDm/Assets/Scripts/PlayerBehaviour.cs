@@ -2,25 +2,24 @@
 using System.Linq;
 using System.Collections.Generic;
 using UnityEngine;
+using System;
 
 public class PlayerBehaviour : MonoBehaviour {
 
-    public AWeapon EquippedWeaponRight { get; private set; }
-    public AWeapon EquippedWeaponLeft { get; private set; }
+    private AWeapon EquippedWeaponRight;
+    private AWeapon EquippedWeaponLeft;
     private int WeaponCount = 0;
 
     public AWeapon DefaultWeapon;
 
-	// Use this for initialization
-	void Start () {
+    void Start () {
         EquippedWeaponRight = DefaultWeapon;
         EquippedWeaponRight.Equip();
         EquippedWeaponLeft = DefaultWeapon;
         EquippedWeaponLeft.Equip();
     }
-	
-	// Update is called once per frame
-	void Update () {
+
+    void Update () {
         if (Input.GetMouseButtonUp(0)) { 
             FireRight();
             Debug.Log("Pressed left click.");

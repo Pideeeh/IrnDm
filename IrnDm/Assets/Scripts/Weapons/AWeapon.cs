@@ -15,7 +15,7 @@ public class AWeapon : MonoBehaviour {
     public AudioClip NotCooledDown;
     public AudioClip EquipSound;
 
-    private bool isEquiped = false;
+    private bool isEquiped = true;
     private bool isReloading = false;
 
     protected AudioSource WeaponAudioSource;
@@ -31,12 +31,16 @@ public class AWeapon : MonoBehaviour {
     }
 
     public void Fire() {
+        Debug.Log("Fire");
         if (isEquiped)
         {
+            Debug.Log("equip");
             if (!IsEmpty())
             {
+                Debug.Log("notempty");
                 if (!isReloading)
                 {
+                    Debug.Log("loaded");
                     StartCoroutine(FireProjectile());
                 }
                 else
@@ -64,7 +68,7 @@ public class AWeapon : MonoBehaviour {
 
     protected virtual void LaunchProjectile() {
         AProjectile projectile = InstantiateProjectile(gameObject.transform.position);
-        projectile.GetComponent<Rigidbody>().velocity = GetComponentInParent<Camera>().transform.forward * projectile.Speed;
+        projectile.GetComponent<Rigidbody>().velocity = GetAimVector() * projectile.Speed;
     }
 
     protected AProjectile InstantiateProjectile(Vector3 direction) {
@@ -73,15 +77,17 @@ public class AWeapon : MonoBehaviour {
 
     protected Vector3 GetAimVector()
     {
-        return GetComponentInParent<Camera>().transform.forward;
+        return transform.parent.forward;
     }
 
     public void Equip() {
         PlaySound(EquipSound);
+        Debug.Log("Equip");
         isEquiped = true;
     }
 
     public bool UnEquip() {
+        Debug.Log("Unequip");
         if (!isReloading)
         {
             return true;
@@ -95,7 +101,7 @@ public class AWeapon : MonoBehaviour {
     }
 
     private void PlaySound(AudioClip clip) {
-        if (clip != null)
+        if (clip != null && WeaponAudioSource != null)
         {
             WeaponAudioSource.PlayOneShot(clip);
         }
