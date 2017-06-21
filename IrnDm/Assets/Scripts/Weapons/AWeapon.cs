@@ -67,7 +67,10 @@ public class AWeapon : MonoBehaviour {
     }
 
     protected virtual void LaunchProjectile() {
+        Quaternion direction = transform.parent.rotation;
         AProjectile projectile = InstantiateProjectile(gameObject.transform.position);
+        projectile.transform.rotation= direction;
+        projectile.transform.Rotate(new Vector3(0, 1, 0), 180);
         projectile.GetComponent<Rigidbody>().velocity = GetAimVector() * projectile.Speed;
     }
 

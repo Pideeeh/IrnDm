@@ -1,0 +1,13 @@
+version BMRT 2.5.0h
+light ambientlight
+param	float	intensity		1
+param	color	lightcolor		1 1 1
+initcode 1
+	return
+code
+	return_area
+	mulFC	intensity lightcolor 
+	popc	Cl 
+	pushif	0 
+	vset	L 
+	return

@@ -1,0 +1,25 @@
+version BMRT 2.5.0h
+surface matte
+param	float	Ka		1
+param	float	Kd		1
+local	normal	Nf	0 0 0
+initcode 1
+	return
+code
+	return_area
+	pushv	I 
+	pushv	N 
+	normalize
+	faceforward
+	popv	Nf 
+	cpCC	Os Oi 
+	pushv	Nf 
+	diffuse
+	mulFc	Kd 
+	ambient
+	mulFc	Ka 
+	addcc
+	mulCC	Os Cs 
+	mulcc
+	popc	Ci 
+	return

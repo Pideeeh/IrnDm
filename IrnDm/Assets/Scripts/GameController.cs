@@ -68,7 +68,6 @@ public class GameController : MonoBehaviour {
 
     public void IncScore() {
         Score++;
-        Debug.Log(Score);
     }
 
     public void DecScore()

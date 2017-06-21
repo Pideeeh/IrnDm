@@ -1,0 +1,449 @@
+version BMRT 2.5.0h
+surface AA11721
+param	float	plastic_1_0_Ka		0.1
+param	float	plastic_1_0_Kd		1
+param	float	plastic_1_0_Ks		0.5
+param	float	plastic_1_0_rgh		0.5
+param	string	spline_2_0_B		"catmull-rom"
+param	float	multiply_3_0_A		6.48
+param	string	transform_5_0_FROM		"current"
+param	string	transform_5_0_TO		"shader"
+param	float	dented_4_0_HGT		2.41
+param	float	dented_4_0_FQ		4
+param	float	dented_4_0_OCT		6
+param	color	spline_2_0_K1		0.31 1 1
+param	color	spline_2_0_K2		1 1 1
+param	color	spline_2_0_K3		0.7 0 0
+param	color	spline_2_0_K4		0.8 0.51 0.05
+param	color	spline_2_0_K5		0.11 0.15 0.2
+param	color	spline_2_0_K6		1 0.7 0.3
+param	color	spline_2_0_K7		0 0.8 0.6
+param	color	spline_2_0_K8		1 0.99 0.8
+param	string	spline_2_1_B		"catmull-rom"
+param	float	multiply_3_1_A		1.133
+param	string	transform_5_1_FROM		"current"
+param	string	transform_5_1_TO		"shader"
+param	float	dented_4_1_HGT		4
+param	float	dented_4_1_FQ		4
+param	float	dented_4_1_OCT		6
+param	color	spline_2_1_K1		0.75 1 1
+param	color	spline_2_1_K2		1 1 1
+param	color	spline_2_1_K3		0.7 0 0
+param	color	spline_2_1_K4		0.8 0.2 0.05
+param	color	spline_2_1_K5		1 0.5 0.2
+param	color	spline_2_1_K6		1 0.7 0.3
+param	color	spline_2_1_K7		1 0.72 0.6
+param	color	spline_2_1_K8		1 0.9 0.55
+param	string	spline_2_2_B		"catmull-rom"
+param	float	multiply_3_2_A		1.133
+param	string	transform_5_2_FROM		"current"
+param	string	transform_5_2_TO		"shader"
+param	float	dented_4_2_HGT		4
+param	float	dented_4_2_FQ		4
+param	float	dented_4_2_OCT		1.11
+param	color	spline_2_2_K1		1 0.43 1
+param	color	spline_2_2_K2		1 1 1
+param	color	spline_2_2_K3		0.7 0 0
+param	color	spline_2_2_K4		0.8 0.2 0.05
+param	color	spline_2_2_K5		1 0.5 0.73
+param	color	spline_2_2_K6		1 0.7 0.3
+param	color	spline_2_2_K7		1 0.8 0.6
+param	color	spline_2_2_K8		1 0.9 0.8
+param	color	plastic_1_0_OP		1 0.04 0.08
+param	float	Displacement_2_3_AMP		1.32
+param	string	transform_5_3_FROM		"current"
+param	string	transform_5_3_TO		"shader"
+param	float	dented_4_3_HGT		4
+param	float	dented_4_3_FQ		4
+param	float	dented_4_3_OCT		6
+param	float	txtscale_1		1
+local	string	$_str_0 	"Copyright (c) 1996 Cinema Graphics, Inc. All Rights Reserved."
+local	string	$_str_1 	"z"
+local	string	$_str_2 	"y"
+local	string	$_str_3 	"spot"
+local	string	$_str_4 	"omni"
+local	string	$_str_5 	"x"
+local	string	$_str_6 	"catmull-rom"
+local	string	$_str_7 	"current"
+local	string	$_str_8 	"shader"
+local	color	plastic_1_0_AMB	0 0 0
+local	float	spline_2_0_C	0
+local	float	multiply_3_0_B1	0
+local	point	dented_4_0_PP	0 0 0
+local	point	transform_5_0_PP	0 0 0
+local	color	plastic_1_0_DIF	0 0 0
+local	float	spline_2_1_C	0
+local	float	multiply_3_1_B1	0
+local	point	dented_4_1_PP	0 0 0
+local	point	transform_5_1_PP	0 0 0
+local	color	plastic_1_0_HI	0 0 0
+local	float	spline_2_2_C	0
+local	float	multiply_3_2_B1	0
+local	point	dented_4_2_PP	0 0 0
+local	point	transform_5_2_PP	0 0 0
+local	normal	plastic_1_0_NN	0 0 0
+local	point	Displacement_2_3_PP	0 0 0
+local	normal	Displacement_2_3_DIR	0 0 0
+local	float	Displacement_2_3_VAL	0
+local	float	cube_3_3_A	0
+local	point	dented_4_3_PP	0 0 0
+local	point	transform_5_3_PP	0 0 0
+local	point	transform_5_0_OUT	0 0 0
+local	float	dented_4_0_OUT	0
+local	float	multiply_3_0_OUT	0
+local	color	spline_2_0_OUT	0 0 0
+local	point	transform_5_1_OUT	0 0 0
+local	float	dented_4_1_OUT	0
+local	float	multiply_3_1_OUT	0
+local	color	spline_2_1_OUT	0 0 0
+local	point	transform_5_2_OUT	0 0 0
+local	float	dented_4_2_OUT	0
+local	float	multiply_3_2_OUT	0
+local	color	spline_2_2_OUT	0 0 0
+local	point	transform_5_3_OUT	0 0 0
+local	float	dented_4_3_OUT	0
+local	float	cube_3_3_OUT	0
+local	normal	Displacement_2_3_NN	0 0 0
+local	vector	Displacement_2_3_R	0 0 0
+local	point	Displacement_2_3_nuP	0 0 0
+local	color	plastic_1_0_OI	0 0 0
+local	color	plastic_1_0_CI	0 0 0
+local	float	i	0
+local	float	j	0
+local	float	val_1	0
+local	float	val_2	0
+local	float	val_3	0
+local	float	val_4	0
+local	float	val_5	0
+local	float	val_6	0
+local	float	gs_scale_1	0
+local	float	gs_scale_2	0
+local	float	gs_scale_3	0
+local	point	point_1	0 0 0
+local	point	point_2	0 0 0
+local	point	point_Q	0 0 0
+local	color	SurfaceColor_0_0_CI	0 0 0
+local	float	_34$i	0
+local	float	_34$sum	0
+local	float	_34$freq	0
+initcode 56
+	return
+code
+	pushv	P 
+	popv	transform_5_0_PP 
+	pushv	P 
+	popv	transform_5_1_PP 
+	pushv	P 
+	popv	transform_5_2_PP 
+	pushv	P 
+	popv	Displacement_2_3_PP 
+	pushv	N 
+	popv	Displacement_2_3_DIR 
+	pushv	P 
+	popv	transform_5_3_PP 
+	pushif	0 
+	popf	i 
+	pushif	0 
+	popf	j 
+	pushif	0 
+	popf	val_1 
+	pushif	0 
+	popf	val_2 
+	pushif	0 
+	popf	val_3 
+	pushif	0 
+	popf	val_4 
+	pushif	0 
+	popf	val_5 
+	pushif	0 
+	popf	val_6 
+	pushif	0 
+	popf	gs_scale_1 
+	pushif	0 
+	popf	gs_scale_2 
+	pushif	0 
+	popf	gs_scale_3 
+	pushiv	0 0 0 
+	popv	point_1 
+	pushiv	0 0 0 
+	popv	point_2 
+	pushiv	0 0 0 
+	popv	point_Q 
+	pushv	transform_5_0_PP 
+	pushs	transform_5_0_TO 
+	pushs	transform_5_0_FROM 
+	transformss
+	mulFv	txtscale_1 
+	popv	transform_5_0_OUT 
+	cpVV	transform_5_0_OUT dented_4_0_PP 
+	pushif	0 
+	popf	_34$sum 
+	cpFF	dented_4_0_FQ _34$freq 
+	pushif	0 
+	popf	_34$i 
+label 1
+	pushf	dented_4_0_OCT 
+	pushf	_34$i 
+	lt
+	ifz	3
+	pushf	_34$freq 
+	mulVF	dented_4_0_PP _34$freq 
+	noisev
+	pushif	0.5 
+	subff
+	abs
+	divff
+	mulF	dented_4_0_HGT 
+	addF	_34$sum 
+	popf	_34$sum 
+	pushif	2 
+	mulF	_34$freq 
+	popf	_34$freq 
+label 2
+	pushif	1 
+	addF	_34$i 
+	popf	_34$i 
+	jump	1
+label 3
+	pushf	_34$sum 
+label 0
+	popf	dented_4_0_OUT 
+	cpFF	dented_4_0_OUT multiply_3_0_B1 
+	mulFF	multiply_3_0_A multiply_3_0_B1 
+	popf	multiply_3_0_OUT 
+	cpFF	multiply_3_0_OUT spline_2_0_C 
+	pushc	spline_2_0_K8 
+	pushc	spline_2_0_K7 
+	pushc	spline_2_0_K6 
+	pushc	spline_2_0_K5 
+	pushc	spline_2_0_K4 
+	pushc	spline_2_0_K3 
+	pushc	spline_2_0_K2 
+	pushc	spline_2_0_K1 
+	pushf	spline_2_0_C 
+	pushs	spline_2_0_B 
+	pushif	8 
+	colorsplineb
+	popc	spline_2_0_OUT 
+	cpCC	spline_2_0_OUT plastic_1_0_AMB 
+	pushv	transform_5_1_PP 
+	pushs	transform_5_1_TO 
+	pushs	transform_5_1_FROM 
+	transformss
+	mulFv	txtscale_1 
+	popv	transform_5_1_OUT 
+	cpVV	transform_5_1_OUT dented_4_1_PP 
+	pushif	0 
+	popf	_34$sum 
+	cpFF	dented_4_1_FQ _34$freq 
+	pushif	0 
+	popf	_34$i 
+label 5
+	pushf	dented_4_1_OCT 
+	pushf	_34$i 
+	lt
+	ifz	7
+	pushf	_34$freq 
+	mulVF	dented_4_1_PP _34$freq 
+	noisev
+	pushif	0.5 
+	subff
+	abs
+	divff
+	mulF	dented_4_1_HGT 
+	addF	_34$sum 
+	popf	_34$sum 
+	pushif	2 
+	mulF	_34$freq 
+	popf	_34$freq 
+label 6
+	pushif	1 
+	addF	_34$i 
+	popf	_34$i 
+	jump	5
+label 7
+	pushf	_34$sum 
+label 4
+	popf	dented_4_1_OUT 
+	cpFF	dented_4_1_OUT multiply_3_1_B1 
+	mulFF	multiply_3_1_A multiply_3_1_B1 
+	popf	multiply_3_1_OUT 
+	cpFF	multiply_3_1_OUT spline_2_1_C 
+	pushc	spline_2_1_K8 
+	pushc	spline_2_1_K7 
+	pushc	spline_2_1_K6 
+	pushc	spline_2_1_K5 
+	pushc	spline_2_1_K4 
+	pushc	spline_2_1_K3 
+	pushc	spline_2_1_K2 
+	pushc	spline_2_1_K1 
+	pushf	spline_2_1_C 
+	pushs	spline_2_1_B 
+	pushif	8 
+	colorsplineb
+	popc	spline_2_1_OUT 
+	cpCC	spline_2_1_OUT plastic_1_0_DIF 
+	pushv	transform_5_2_PP 
+	pushs	transform_5_2_TO 
+	pushs	transform_5_2_FROM 
+	transformss
+	mulFv	txtscale_1 
+	popv	transform_5_2_OUT 
+	cpVV	transform_5_2_OUT dented_4_2_PP 
+	pushif	0 
+	popf	_34$sum 
+	cpFF	dented_4_2_FQ _34$freq 
+	pushif	0 
+	popf	_34$i 
+label 9
+	pushf	dented_4_2_OCT 
+	pushf	_34$i 
+	lt
+	ifz	11
+	pushf	_34$freq 
+	mulVF	dented_4_2_PP _34$freq 
+	noisev
+	pushif	0.5 
+	subff
+	abs
+	divff
+	mulF	dented_4_2_HGT 
+	addF	_34$sum 
+	popf	_34$sum 
+	pushif	2 
+	mulF	_34$freq 
+	popf	_34$freq 
+label 10
+	pushif	1 
+	addF	_34$i 
+	popf	_34$i 
+	jump	9
+label 11
+	pushf	_34$sum 
+label 8
+	popf	dented_4_2_OUT 
+	cpFF	dented_4_2_OUT multiply_3_2_B1 
+	mulFF	multiply_3_2_A multiply_3_2_B1 
+	popf	multiply_3_2_OUT 
+	cpFF	multiply_3_2_OUT spline_2_2_C 
+	pushc	spline_2_2_K8 
+	pushc	spline_2_2_K7 
+	pushc	spline_2_2_K6 
+	pushc	spline_2_2_K5 
+	pushc	spline_2_2_K4 
+	pushc	spline_2_2_K3 
+	pushc	spline_2_2_K2 
+	pushc	spline_2_2_K1 
+	pushf	spline_2_2_C 
+	pushs	spline_2_2_B 
+	pushif	8 
+	colorsplineb
+	popc	spline_2_2_OUT 
+	cpCC	spline_2_2_OUT plastic_1_0_HI 
+	pushv	transform_5_3_PP 
+	pushs	transform_5_3_TO 
+	pushs	transform_5_3_FROM 
+	transformss
+	mulFv	txtscale_1 
+	popv	transform_5_3_OUT 
+	cpVV	transform_5_3_OUT dented_4_3_PP 
+	pushif	0 
+	popf	_34$sum 
+	cpFF	dented_4_3_FQ _34$freq 
+	pushif	0 
+	popf	_34$i 
+label 13
+	pushf	dented_4_3_OCT 
+	pushf	_34$i 
+	lt
+	ifz	15
+	pushf	_34$freq 
+	mulVF	dented_4_3_PP _34$freq 
+	noisev
+	pushif	0.5 
+	subff
+	abs
+	divff
+	mulF	dented_4_3_HGT 
+	addF	_34$sum 
+	popf	_34$sum 
+	pushif	2 
+	mulF	_34$freq 
+	popf	_34$freq 
+label 14
+	pushif	1 
+	addF	_34$i 
+	popf	_34$i 
+	jump	13
+label 15
+	pushf	_34$sum 
+label 12
+	popf	dented_4_3_OUT 
+	cpFF	dented_4_3_OUT cube_3_3_A 
+	pushf	cube_3_3_A 
+	mulFF	cube_3_3_A cube_3_3_A 
+	mulff
+	popf	cube_3_3_OUT 
+	cpFF	cube_3_3_OUT Displacement_2_3_VAL 
+	pushif	0 
+	pushf	Displacement_2_3_AMP 
+	fnef
+	pushif	0 
+	pushf	Displacement_2_3_VAL 
+	fnef
+	and
+	ifz	16
+	pushf	Displacement_2_3_VAL 
+	pushf	Displacement_2_3_AMP 
+	pushv	Displacement_2_3_DIR 
+	normalize
+	mulvf
+	mulvf
+	addV	Displacement_2_3_PP 
+	popv	P 
+	pushv	P 
+	calculatenormal
+	popv	N 
+label 16
+label 17
+	pushv	N 
+	normalize
+	popv	Displacement_2_3_NN 
+	cpVV	Displacement_2_3_NN plastic_1_0_NN 
+	pushv	I 
+	pushv	plastic_1_0_NN 
+	normalize
+	faceforward
+	diffuse
+	mulCF	plastic_1_0_AMB plastic_1_0_Kd 
+	mulcc
+	ambient
+	mulCF	plastic_1_0_AMB plastic_1_0_Ka 
+	mulcc
+	addcc
+	mulC	plastic_1_0_OP 
+	popc	plastic_1_0_CI 
+	pushif	0 
+	pushf	plastic_1_0_Ks 
+	gt
+	ifz	18
+	pushf	plastic_1_0_rgh 
+	pushv	I 
+	negv
+	normalize
+	pushv	I 
+	pushv	plastic_1_0_NN 
+	normalize
+	faceforward
+	specular
+	mulCF	plastic_1_0_HI plastic_1_0_Ks 
+	mulcc
+	addC	plastic_1_0_CI 
+	popc	plastic_1_0_CI 
+label 18
+label 19
+	cpCC	plastic_1_0_CI SurfaceColor_0_0_CI 
+	pushiv	1 1 1 
+	popc	Oi 
+	cpCC	SurfaceColor_0_0_CI Ci 
+	return

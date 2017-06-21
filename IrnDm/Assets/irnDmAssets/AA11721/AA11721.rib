@@ -1,0 +1,66 @@
+
+##RenderMan RIB
+Display "AA11721.tif" "tiff" "rgb"
+#Format 128 128 1
+Format 256 256 1
+#Format 512 512 1
+Projection "perspective" "fov" [35]
+
+PixelSamples 2 2
+#PixelSamples 4 4 
+#PixelFilter "catmull-rom" 3 3 
+#PixelFilter "sinc" 5 5 
+#ShadingInterpolation "smooth"
+ShadingRate 1.0
+#ShadingRate 0.25
+Option "limits" "bucketsize" [ 16 16 ]
+Option "searchpath" "shader" [".:shaders:&"]
+
+Attribute "render" "truedisplacement" [1]
+
+Translate 0 0 4.0
+Scale 1 1 -1
+
+WorldBegin
+
+LightSource "ambientlight" 1 "intensity" 1.2 "lightcolor" [1 1 1]
+TransformBegin
+    Rotate 0.0 0 0 1
+    Rotate 45.0 0 1 0
+    Rotate -45.0 1 0 0
+    Translate 0 0 10
+    LightSource "pointnofalloff"  2 "lightcolor" [1.0 1.0 1.0] "from" [0 0 10]
+TransformEnd
+Illuminate 1 1
+Identity
+
+AttributeBegin
+   Color [ 0.0 0.0 0.0 ]
+   Opacity [ 1 1 1 ]
+   Surface "matte" "Ka" [ 1.0 ] "Kd" [ 1.0 ]
+   Patch "bilinear" "P" [ -5 -5 -3 5 -5 -3 -5  5 -3 5  5 -3 ]
+AttributeEnd
+
+AttributeBegin
+    Color [ 1.0 1.0 1.0 ]
+    Opacity [1 1 1]
+    Attribute "bound" "displacement" 0.5
+    #Attribute "bound" "displacement" 1.0
+
+    TransformBegin
+       Rotate 0.0 0 0 1
+       Rotate 0 0 1 0
+       Rotate 0 1 0 0
+       #Scale 0.21 0.21 0.21
+       Scale 1 1 1
+       Surface "AA11721"
+       #Displacement "AA11721d"	
+    TransformEnd
+
+   TransformBegin
+   Rotate -90 1 0 0
+   Sphere 1 -1 1 360.0
+   #Patch "bilinear" "P" [ -1.25 -1.25 0 1.25 -1.25 0 -1.25 1.25 0 1.25 1.25 0 ]
+   TransformEnd
+AttributeEnd
+WorldEnd 

@@ -47,6 +47,13 @@ public class HitscanWeapon : AWeapon {
 
     private RaycastHit CastRay() {
         Vector3 RayVector = Spread(GetAimVector());
+        if (UnityEngine.Random.Range(0, 1) == 0)
+        {
+            GameObject projectile = Instantiate(rayPelletParticle, gameObject.transform.position, Quaternion.identity);
+            projectile.transform.forward = RayVector;
+            projectile.GetComponent<Rigidbody>().AddForce(RayVector.normalized,ForceMode.Impulse);
+            Destroy(projectile, 2);
+        }
         Ray ray = new Ray(gameObject.transform.position, RayVector);
         RaycastHit hit;
         if (Physics.Raycast(ray,out hit,Mathf.Infinity))
@@ -59,9 +66,8 @@ public class HitscanWeapon : AWeapon {
     private Vector3 Spread(Vector3 aim)
     {
         aim.Normalize();
-        Quaternion v = new Quaternion(aim.x, aim.y, aim.z, UnityEngine.Random.Range(-1f, 1f));
-        Vector3 point = new Vector3(aim.x + UnityEngine.Random.Range(0f, Scattering), aim.y, aim.z);
-        return v * point;
+        Vector3 point = new Vector3(aim.x + UnityEngine.Random.Range(-Scattering, Scattering), aim.y + UnityEngine.Random.Range(-Scattering, Scattering), aim.z);
+        return point;
     }
 
 }

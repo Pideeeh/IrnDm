@@ -1,0 +1,25 @@
+light pointnofalloff
+param	float	intensity		1
+param	color	lightcolor		0 0 0
+param	point	from		0 0 0
+local	string	$_str_0 	"current"
+local	string	$_str_1 	"shader"
+initcode 1
+	pushiv	1 1 1 
+	popc	lightcolor 
+initcode 2
+	pushiv	0 0 0 
+	pushs	$_str_0 
+	pushs	$_str_1 
+	transform2s
+	popv	from 
+	return
+code
+	return_area
+	pushv	from 
+	illuminate1	0
+	pushc	lightcolor 
+	mulFv	intensity 
+	popc	Cl 
+label 0
+	return
