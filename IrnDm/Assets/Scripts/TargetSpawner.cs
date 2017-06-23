@@ -38,7 +38,7 @@ public class TargetSpawner : MonoBehaviour {
         Vector3 SpawnDirection = new Vector3(Mathf.Cos(SpawnAngle), 0, Mathf.Sin(SpawnAngle));
         GameObject targetInstance = Instantiate(Target, SpawnDirection * SpawnDistance + new Vector3(0, 4, 0), new Quaternion(SpawnDirection.z, 0, -SpawnDirection.x, Mathf.Cos(FacingAngle)));
         targetInstance.GetComponent<Rigidbody>().AddForce(targetInstance.transform.up * -LaunchPower, ForceMode.Impulse);
-        targetInstance.GetComponent<Rigidbody>().AddTorque(20f, 0f, 0f, ForceMode.Impulse);
+        targetInstance.GetComponent<Rigidbody>().AddTorque(SpawnRotation, ForceMode.Impulse);
         yield return new WaitForSecondsRealtime(SpawnSpeed);
         readyNow = true;
     }
