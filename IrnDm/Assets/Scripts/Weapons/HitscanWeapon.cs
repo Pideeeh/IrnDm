@@ -66,7 +66,7 @@ public class HitscanWeapon : AWeapon {
     private Vector3 Spread(Vector3 aim)
     {
         aim.Normalize();
-        Vector3 point = new Vector3(aim.x + UnityEngine.Random.Range(-Scattering, Scattering), aim.y + UnityEngine.Random.Range(-Scattering, Scattering), aim.z);
+        Vector3 point = new Vector3(aim.x + UnityEngine.Random.Range(-Scattering, Scattering), aim.y + UnityEngine.Random.Range(-Scattering, Scattering), aim.z + UnityEngine.Random.Range(-Scattering, Scattering));
         return point;
     }
 

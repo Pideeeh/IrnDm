@@ -8,15 +8,16 @@ public class GameController : MonoBehaviour {
 
 
     public float BaseSpeedms = 1000.0f;
-    public int Score;
     public TargetSpawner targetSpawner;
 
     private GameState gameState = GameState.MENU;
     private MenuController menuController;
     private int difficulty;
+    public int Score = 0;
+    public float Health = 100;
 
-	// Use this for initialization
-	void Start () {
+    // Use this for initialization
+    void Start () {
         targetSpawner.SpawnSpeed = BaseSpeedms/1000;
         menuController = FindObjectOfType<MenuController>();
 
@@ -66,13 +67,15 @@ public class GameController : MonoBehaviour {
         this.gameState = GameState.MENU;
     }
 
-    public void IncScore() {
-        Score++;
+    public void ScorePoints(int amount) {
+        Score += amount;
     }
 
-    public void DecScore()
+    public void TakeDamage(float damage)
     {
-        Score--;
+        Health -= damage;
     }
+
+
 
 }

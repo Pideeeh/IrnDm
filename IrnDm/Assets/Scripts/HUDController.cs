@@ -4,20 +4,30 @@ using UnityEngine;
 
 public class HUDController : MonoBehaviour {
 
-    public GameObject ScoreBoard;
-    public GameObject HealthBar;
-
-    private int points;
-    private int health;
+    private int points = 0;
+    private int health = 100;
+    private AudioSource hud_audio;
 
 
 	// Use this for initialization
 	void Start () {
-		
+        hud_audio = GetComponent<AudioSource>();
 	}
 	
 	// Update is called once per frame
 	void Update () {
-
+        UpdateHealth();
+        UpdateScore();
 	}
+
+
+    public void UpdateHealth()
+    {
+        GameObject.Find("Healthbar").GetComponent<UnityEngine.UI.Slider>().value = FindObjectOfType<GameController>().Health;
+    }
+
+    public void UpdateScore()
+    {
+        GameObject.Find("ScoreBoard").GetComponent<UnityEngine.UI.Text>().text = FindObjectOfType<GameController>().Score.ToString();
+    }
 }

@@ -10,24 +10,23 @@ public class PlayerBehaviour : MonoBehaviour {
     private AWeapon EquippedWeaponLeft;
     private int WeaponCount = 0;
 
-    public AWeapon DefaultWeapon;
+    public AWeapon DefaultWeaponRight;
+    public AWeapon DefaultWeaponLeft;
 
     void Start () {
-        EquippedWeaponRight = DefaultWeapon;
+        EquippedWeaponRight = DefaultWeaponRight;
         EquippedWeaponRight.Equip();
-        EquippedWeaponLeft = DefaultWeapon;
+        EquippedWeaponLeft = DefaultWeaponLeft;
         EquippedWeaponLeft.Equip();
     }
 
     void Update () {
         if (Input.GetMouseButtonUp(0)) { 
-            FireRight();
-            Debug.Log("Pressed left click.");
+            FireLeft();
         }
         if (Input.GetMouseButtonUp(1))
         {
-            //Fire right
-            Debug.Log("Pressed right click.");
+            FireRight();
         }
     }
 
@@ -36,7 +35,7 @@ public class PlayerBehaviour : MonoBehaviour {
         if (EquippedWeaponLeft.IsEmpty())
         {
             EquippedWeaponLeft.UnEquip();
-            EquippedWeaponLeft = DefaultWeapon;
+            EquippedWeaponLeft = DefaultWeaponLeft;
             EquippedWeaponLeft.Equip();
         }
     }
@@ -45,7 +44,7 @@ public class PlayerBehaviour : MonoBehaviour {
         if (EquippedWeaponRight.IsEmpty())
         {
             EquippedWeaponRight.UnEquip();
-            EquippedWeaponRight = DefaultWeapon;
+            EquippedWeaponRight = DefaultWeaponRight;
             EquippedWeaponRight.Equip();
         }
     }

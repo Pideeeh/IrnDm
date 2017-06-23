@@ -177,7 +177,7 @@
     <Compile Include="Assets\DownloadedAssets\Standard Assets\Utility\TimedObjectDestructor.cs" />
     <Compile Include="Assets\DownloadedAssets\Standard Assets\Utility\WaypointCircuit.cs" />
     <Compile Include="Assets\DownloadedAssets\Standard Assets\Utility\WaypointProgressTracker.cs" />
-    <Compile Include="Assets\Prefabs\Dinosaur\Comp\comp_cs.cs" />
+    <Compile Include="Assets\Prefabs\Raptor\Comp\comp_cs.cs" />
     <Compile Include="Assets\Scripts\GameController.cs" />
     <Compile Include="Assets\Scripts\HUDController.cs" />
     <Compile Include="Assets\Scripts\Menu\MenuBrick.cs" />
@@ -345,7 +345,7 @@
     <None Include="Assets\DownloadedAssets\Standard Assets\Characters\RollerBall\RollerBallGuidelines.txt" />
     <None Include="Assets\DownloadedAssets\Standard Assets\Characters\ThirdPersonCharacter\ThirdPersonCharacterGuidelines.txt" />
     <None Include="Assets\DownloadedAssets\Standard Assets\CrossPlatformInput\CrossPlatformInputGuidelines.txt" />
-    <None Include="Assets\Prefabs\Dinosaur\Readme.txt" />
+    <None Include="Assets\Prefabs\Raptor\Readme.txt" />
     <None Include="Assets\Standard Assets\Environment\Water (Basic)\Shaders\FXWaterBasic.shader" />
     <None Include="Assets\Standard Assets\Environment\Water\Water\Shaders\FXWaterPro.shader" />
     <None Include="Assets\Standard Assets\Environment\Water\Water4\Shaders\FXWater4Advanced.shader" />

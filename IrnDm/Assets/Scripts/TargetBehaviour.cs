@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class TargetBehaviour : MonoBehaviour, IRayTarget
+public class TargetBehaviour : MonoBehaviour//, IRayTarget
 {
 
     public GameObject ExplosionPrefab;
@@ -34,6 +34,7 @@ public class TargetBehaviour : MonoBehaviour, IRayTarget
                 Impact = gameObject.transform.position;
                 Impact.y = 0;
                 GameObject Creature = Instantiate(ContainingCreature, Impact, Quaternion.identity);
+                Destroy(Creature, 60f);
                 GameObject particleSystemOnGround = Instantiate(SmokeOnGround, Impact, Quaternion.identity);
                 Destroy(particleSystemOnGround, particleSystemOnGround.GetComponent<ParticleSystem>().main.duration - 0.2f);
             }
@@ -41,7 +42,7 @@ public class TargetBehaviour : MonoBehaviour, IRayTarget
         }
         if (collision.collider.tag == "Projectile")
         {
-            FindObjectOfType<GameController>().IncScore();
+            FindObjectOfType<GameController>().ScorePoints(10);
         }
         Debug.Log(collision.collider.tag.ToString());
         FireDestroyParticleSystem();
@@ -49,16 +50,15 @@ public class TargetBehaviour : MonoBehaviour, IRayTarget
 
     }
 
-    public void RayHit()
+    /*public void RayHit()
     {
         if (!isHitByRay)
         {
-            FindObjectOfType<GameController>().IncScore();
             FireDestroyParticleSystem();
             isHitByRay = true;
             Destroy(gameObject);
         }
-    }
+    }*/
 
     private void FireDestroyParticleSystem()
     {

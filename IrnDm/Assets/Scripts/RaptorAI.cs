@@ -2,42 +2,53 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class RaptorAI : MonoBehaviour {
+public class RaptorAI : MonoBehaviour, IRayTarget {
 
     public float speed;
     public GameObject BloodPrefab;
 
+    public AudioClip raptor_attack, raptor_step, raptor_dies;
+    public AudioClip alerta;
 
-    private GameObject Finish;
-    private Vector3 direction;
-    private Animator anim;
-    private bool ready = true;
 
-    private bool isHitByRay = false;
+    GameObject Finish;
+    Vector3 direction;
+    Animator anim;
+    AudioSource source;
+    private bool reported = false;
+    private bool alive = true;
+
     private int Health = 100;
 
     // Use this for initialization
     void Start () {
         Finish = GameObject.FindGameObjectWithTag("Player");
         anim = gameObject.GetComponent<Animator>();
-        Hit();
+        source = gameObject.GetComponent<AudioSource>();
     }
 	
+
 	// Update is called once per frame
 	void Update () {
         UpdateDirection(Finish);
 
-        if (ready)
-            if (!IsNear()) 
+        if (alive)
+        {
+            if (!reported && IsNear(2500f))
+            {
+                Report();
+                reported = true;
+            }
+            if (!IsNear(15f))
                 Walk();
             else
-                Hit();
-	}
+                Attack();
+        }
+    }
 
-    private bool IsNear()
+    private bool IsNear(float sqrdistance)
     {
-        return (Mathf.Abs(Finish.transform.position.x - gameObject.transform.position.x)*Mathf.Abs(Finish.transform.position.z - gameObject.transform.position.z) < 5);
-
+        return (Mathf.Pow(Finish.transform.position.x - gameObject.transform.position.x,2) + Mathf.Pow(Finish.transform.position.z - gameObject.transform.position.z,2) < sqrdistance);
     }
 
 
@@ -47,28 +58,37 @@ public class RaptorAI : MonoBehaviour {
     {
         anim.SetBool("Attack", false);
         anim.SetInteger("State", 3);
+        if (!source.isPlaying)
+        {
+            source.PlayOneShot(raptor_step);
+        }
         gameObject.GetComponent<Rigidbody>().velocity = direction.normalized * speed;
     }
 
-    private void Hit()
+    private void Attack()
     {
-        Debug.Log("near");
         anim.SetInteger("State", 0);
         anim.SetBool("Attack", true);
         gameObject.GetComponent<Rigidbody>().velocity = direction * 0;
+        if (!source.isPlaying)
+        {
+            FindObjectOfType<GameController>().TakeDamage(5f);
+            source.PlayOneShot(raptor_attack);
+        }
     }
 
 
     // Onetime Actions
     public void Dies()
     {
-        ready = false;
+        alive = false;
+        anim.SetInteger("State", 0);
+        anim.SetBool("Attack", false);
+        anim.SetInteger("Idle", -1);
         gameObject.GetComponent<Collider>().isTrigger = true;
         gameObject.GetComponent<Rigidbody>().velocity = direction * 0;
-        anim.SetBool("Attack", false);
-        anim.SetInteger("State", 0);
-        anim.SetInteger("Idle", -1);
         Destroy(gameObject, 5f);
+        source.PlayOneShot(raptor_dies);
     }
 
     public void UpdateDirection(GameObject facing) {
@@ -77,7 +97,12 @@ public class RaptorAI : MonoBehaviour {
         gameObject.transform.rotation = Quaternion.LookRotation(direction);
     }
 
-
+    private void Report()
+    {
+        AudioSource HUD_audio = GameObject.Find("HUDCanvas").GetComponent<AudioSource>();
+        if(!HUD_audio.isPlaying)
+        HUD_audio.PlayOneShot(alerta);
+    }
 
 
     // Collision
@@ -85,16 +110,23 @@ public class RaptorAI : MonoBehaviour {
     {
         if (collision.collider.tag == "Projectile")
         {
-            AdjustHealth(50);
+            Hit(10);    
         }
     }
 
     public void RayHit()
     {
-        if (!isHitByRay)
+        Hit(40);
+    }
+
+    private void Hit(int dmg)
+    {
+        Health -= dmg;
+        if (Health <= 0 && alive)
         {
-            AdjustHealth(10);
-            isHitByRay = true;
+            FindObjectOfType<GameController>().ScorePoints(7);
+            FireDestroyParticleSystem();
+            Dies();
         }
     }
 
@@ -104,17 +136,6 @@ public class RaptorAI : MonoBehaviour {
         {
             GameObject particleSystem = Instantiate(BloodPrefab, gameObject.transform.position, Quaternion.identity);
             Destroy(particleSystem, particleSystem.GetComponent<ParticleSystem>().main.duration + 1f);
-        }
-    }
-
-    private void AdjustHealth(int dmg)
-    {
-        Health -= dmg;
-        if (Health <= 0)
-        {
-            FindObjectOfType<GameController>().IncScore();
-            FireDestroyParticleSystem();
-            Dies();
         }
     }
 }
