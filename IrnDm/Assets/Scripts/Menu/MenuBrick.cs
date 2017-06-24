@@ -28,6 +28,9 @@ public class MenuBrick : MonoBehaviour, IRayTarget {
 
     public void RayHit()
     {
-        FindObjectOfType<MenuController>().MenuItemHit(this.itemType);
+        MenuController controller = FindObjectOfType<MenuController>();
+        if (controller != null) {
+        controller.MenuItemHit(this.itemType);
+        }
     }
 }

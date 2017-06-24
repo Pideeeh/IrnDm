@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class TargetBehaviour : MonoBehaviour//, IRayTarget
+public class TargetBehaviour : MonoBehaviour
 {
 
     public GameObject ExplosionPrefab;
@@ -31,12 +31,16 @@ public class TargetBehaviour : MonoBehaviour//, IRayTarget
         {
             if (ContainingCreature != null)
             {
-                Impact = gameObject.transform.position;
-                Impact.y = 0;
-                GameObject Creature = Instantiate(ContainingCreature, Impact, Quaternion.identity);
-                Destroy(Creature, 60f);
-                GameObject particleSystemOnGround = Instantiate(SmokeOnGround, Impact, Quaternion.identity);
-                Destroy(particleSystemOnGround, particleSystemOnGround.GetComponent<ParticleSystem>().main.duration - 0.2f);
+                TargetSpawner spawner = FindObjectOfType<TargetSpawner>();
+                if (UnityEngine.Random.Range(0.0f,1.0f) < spawner.difficultyParams.RaptorProbability)
+                {
+                    Impact = gameObject.transform.position;
+                    Impact.y = 0;
+                    GameObject Creature = Instantiate(ContainingCreature, Impact, Quaternion.identity);
+                    Destroy(Creature, 60f);
+                    GameObject particleSystemOnGround = Instantiate(SmokeOnGround, Impact, Quaternion.identity);
+                    Destroy(particleSystemOnGround, particleSystemOnGround.GetComponent<ParticleSystem>().main.duration - 0.2f);
+                }
             }
             //zombieSpawner.Spawn(gameObject, ContainingCreature, ExplosionOnGround);
         }
@@ -49,16 +53,6 @@ public class TargetBehaviour : MonoBehaviour//, IRayTarget
         Destroy(gameObject);
 
     }
-
-    /*public void RayHit()
-    {
-        if (!isHitByRay)
-        {
-            FireDestroyParticleSystem();
-            isHitByRay = true;
-            Destroy(gameObject);
-        }
-    }*/
 
     private void FireDestroyParticleSystem()
     {

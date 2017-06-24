@@ -31,16 +31,12 @@ public class AWeapon : MonoBehaviour {
     }
 
     public void Fire() {
-        Debug.Log("Fire");
         if (isEquiped)
         {
-            Debug.Log("equip");
             if (!IsEmpty())
             {
-                Debug.Log("notempty");
                 if (!isReloading)
                 {
-                    Debug.Log("loaded");
                     StartCoroutine(FireProjectile());
                 }
                 else
@@ -85,12 +81,10 @@ public class AWeapon : MonoBehaviour {
 
     public void Equip() {
         PlaySound(EquipSound);
-        Debug.Log("Equip");
         isEquiped = true;
     }
 
     public bool UnEquip() {
-        Debug.Log("Unequip");
         if (!isReloading)
         {
             return true;

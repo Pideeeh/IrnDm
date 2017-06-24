@@ -2,12 +2,16 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public enum MenuItemType {StartGame, Difficulty, Exit}
+public enum MenuItemType {StartGame, Difficulty, Exit, Score}
+
+public enum DifficultyType {
+    EASY = 0, NORMAL =1 , HARD= 2, BRING_IT_ON=3
+}
 
 public class MenuController : MonoBehaviour {
 
-    int difficulty = 0;
-    private string[] difficulties = new string[] { "Easy", "Normal", "Bring it on", "Hard", "Thou shalt be ripped" };
+    DifficultyType difficulty = 0;
+    private string[] difficulties = new string[] { "Easy", "Normal",  "Hard", "Bring it on" };
 	// Use this for initialization
 	void Start () {
 		
@@ -22,15 +26,16 @@ public class MenuController : MonoBehaviour {
         switch (itemType)
         {
             case MenuItemType.StartGame:
-                FindObjectOfType<GameController>().StartGame(difficulty);
+                FindObjectOfType<GameController>().StartGame();
                 break;
             case MenuItemType.Difficulty:
-                difficulty = difficulty < 4 ? difficulty + 1 : 0;
+                difficulty = (int)difficulty < 3 ? difficulty + 1 : 0;
+                FindObjectOfType<GameController>().difficulty = difficulty;
                 foreach (var item in GetComponentsInChildren<MenuBrick>())
                 {
                     if (item.itemType == MenuItemType.Difficulty)
                     {
-                        item.ChangeDisplayText("Difficulty:\n" + difficulties[difficulty]);
+                        item.ChangeDisplayText("Difficulty:\n" + difficulties[(int)difficulty]);
                     }
                 }
                 break;
@@ -47,6 +52,18 @@ public class MenuController : MonoBehaviour {
     public void ShowMenu()
     {
         gameObject.SetActive(true);
+    }
+
+    public void ShowScore(int Score) {
+        foreach (var item in GetComponentsInChildren<MenuBrick>())
+        {
+            item.gameObject.GetComponent<MeshRenderer>().enabled = true;
+            if (item.itemType == MenuItemType.Score)
+            {
+                item.ChangeDisplayText("Last Score:\n" + Score);
+            }
+        }
+        
     }
 
     

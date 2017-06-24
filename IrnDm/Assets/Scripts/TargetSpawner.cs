@@ -4,7 +4,6 @@ using UnityEngine;
 
 public class TargetSpawner : MonoBehaviour {
 
-    public float SpawnSpeed;
     public float Radius;
     public float LaunchPower;
 
@@ -12,7 +11,7 @@ public class TargetSpawner : MonoBehaviour {
 
     private bool isSpawning = false;
     private bool readyNow = true;
-    private int difficulty;
+    public DifficultyParamSet difficultyParams;
 
 	// Use this for initialization
 	void Start () {
@@ -39,12 +38,12 @@ public class TargetSpawner : MonoBehaviour {
         GameObject targetInstance = Instantiate(Target, SpawnDirection * SpawnDistance + new Vector3(0, 4, 0), new Quaternion(SpawnDirection.z, 0, -SpawnDirection.x, Mathf.Cos(FacingAngle)));
         targetInstance.GetComponent<Rigidbody>().AddForce(targetInstance.transform.up * -LaunchPower, ForceMode.Impulse);
         targetInstance.GetComponent<Rigidbody>().AddTorque(SpawnRotation, ForceMode.Impulse);
-        yield return new WaitForSecondsRealtime(SpawnSpeed);
+        yield return new WaitForSecondsRealtime(difficultyParams.SpawnSpeed);
         readyNow = true;
     }
 
-    public void StartSpawning(int difficulty) {
-        this.difficulty = difficulty;
+    public void StartSpawning(DifficultyParamSet difficultyParams) {
+        this.difficultyParams = difficultyParams;
         isSpawning = true;
     }
 

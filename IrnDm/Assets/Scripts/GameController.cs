@@ -6,19 +6,18 @@ using UnityEngine;
 public enum GameState { MENU, PLAYING, PAUSED, ENDED }
 public class GameController : MonoBehaviour {
 
+    public DifficultyParamSet[] difficultyParams;
 
-    public float BaseSpeedms = 1000.0f;
     public TargetSpawner targetSpawner;
 
     private GameState gameState = GameState.MENU;
     private MenuController menuController;
-    private int difficulty;
+    public DifficultyType difficulty;
     public int Score = 0;
     public float Health = 100;
 
     // Use this for initialization
     void Start () {
-        targetSpawner.SpawnSpeed = BaseSpeedms/1000;
         menuController = FindObjectOfType<MenuController>();
 
     }
@@ -31,26 +30,33 @@ public class GameController : MonoBehaviour {
         }
 	}
 
-    public void StartGame(int difficulty) {
-        this.difficulty = difficulty;
-        menuController.HideMenu();
-        targetSpawner.StartSpawning(this.difficulty);
-        this.gameState = GameState.PLAYING;
+    public void StartGame() {
+        this.Score = 0;
+        this.Health = 100;
+        ResumeGame();
     }
 
     public void PauseGame() {
         menuController.ShowMenu();
         targetSpawner.StopSpawning();
-        //Show pause screen (e.g. HUD) with possibility to go to Menu
         this.gameState = GameState.PAUSED;
+    }
+
+    public void ResumeGame() {
+        menuController.HideMenu();
+        targetSpawner.StartSpawning(difficultyParams[(int)this.difficulty]);
+        this.gameState = GameState.PLAYING;
     }
 
     public void EndGame() {
         menuController.ShowMenu();
+        menuController.ShowScore(this.Score);
         targetSpawner.StopSpawning();
-        //Show result screen (e.g. HUD) with possibility to go to Menu
+        Array.ForEach(GameObject.FindGameObjectsWithTag("Dino"), dino => Destroy(dino));
+        Array.ForEach(GameObject.FindGameObjectsWithTag("Target"), target => Destroy(target));
         this.gameState = GameState.ENDED;
     }
+
 
     private void TogglePause() {
         if (gameState == GameState.PLAYING)
@@ -58,7 +64,7 @@ public class GameController : MonoBehaviour {
             PauseGame();
         }
         else if (gameState == GameState.PAUSED) {
-            StartGame(difficulty);
+            ResumeGame();
         }
     }
 
@@ -74,6 +80,10 @@ public class GameController : MonoBehaviour {
     public void TakeDamage(float damage)
     {
         Health -= damage;
+        if (Health <= 0)
+        {
+            EndGame();
+        }
     }
 
 
