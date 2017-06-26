@@ -95,7 +95,10 @@ public class GameController : MonoBehaviour {
 
     public void ArmorRegeneration()
     {
-        Armor += 0.02f;
+        if (Armor < 100)
+        {
+            Armor += 0.02f;
+        }
     }
 
 
