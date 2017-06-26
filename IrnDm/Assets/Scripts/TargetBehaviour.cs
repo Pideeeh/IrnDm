@@ -8,9 +8,11 @@ public class TargetBehaviour : MonoBehaviour
 
     public GameObject ExplosionPrefab;
     public GameObject SmokeOnGround;
+    public AudioClip ExplosionOnImpact;
     public GameObject ContainingCreature;
 
     private Vector3 Impact;
+    private bool IsImpact = false;
 
     private bool isHitByRay = false;
 
@@ -29,36 +31,46 @@ public class TargetBehaviour : MonoBehaviour
     {
         if (collision.collider.tag == "Ground")
         {
+            if (ExplosionOnImpact != null)
+            {
+                IsImpact = true;
+            }
             if (ContainingCreature != null)
             {
                 TargetSpawner spawner = FindObjectOfType<TargetSpawner>();
                 if (UnityEngine.Random.Range(0.0f,1.0f) < spawner.difficultyParams.RaptorProbability)
                 {
                     Impact = gameObject.transform.position;
-                    Impact.y = 0;
                     GameObject Creature = Instantiate(ContainingCreature, Impact, Quaternion.identity);
                     Destroy(Creature, 60f);
                     GameObject particleSystemOnGround = Instantiate(SmokeOnGround, Impact, Quaternion.identity);
                     Destroy(particleSystemOnGround, particleSystemOnGround.GetComponent<ParticleSystem>().main.duration - 0.2f);
                 }
             }
-            //zombieSpawner.Spawn(gameObject, ContainingCreature, ExplosionOnGround);
         }
         if (collision.collider.tag == "Projectile")
         {
             FindObjectOfType<GameController>().ScorePoints(10);
         }
-        Debug.Log(collision.collider.tag.ToString());
-        FireDestroyParticleSystem();
+        if (Vector3.Distance(gameObject.transform.position, GameObject.FindGameObjectWithTag("Player").transform.position) < 25)
+        {
+            FindObjectOfType<GameController>().TakeDamage(60);
+        }
+        FireDestroyParticleSystem(IsImpact);
         Destroy(gameObject);
 
     }
 
-    private void FireDestroyParticleSystem()
+    private void FireDestroyParticleSystem(bool onGround)
     {
+        
         if (ExplosionPrefab != null)
         {
             GameObject particleSystem = Instantiate(ExplosionPrefab, gameObject.transform.position, Quaternion.identity);
+            if (onGround)
+            {
+                particleSystem.GetComponent<AudioSource>().PlayOneShot(ExplosionOnImpact);
+            }
             Destroy(particleSystem, particleSystem.GetComponent<ParticleSystem>().main.duration - 0.2f);
         }
     }

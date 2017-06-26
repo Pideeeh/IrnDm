@@ -4,9 +4,7 @@ using UnityEngine;
 
 public class ProjectileBehaviour : MonoBehaviour {
 
-    public GameObject explosionParticle;
-    public AudioClip explosionSound;
-    private AudioSource explosionPosition;
+    public GameObject explosionEffects;
 
 
 	// Use this for initialization
@@ -21,11 +19,13 @@ public class ProjectileBehaviour : MonoBehaviour {
 
     public void OnCollisionEnter(Collision collision)
     {
-        if (explosionParticle != null)
+        if (Vector3.Distance(gameObject.transform.position, GameObject.FindGameObjectWithTag("Player").transform.position) < 5)
         {
-            explosionPosition = gameObject.GetComponent<AudioSource>();
-            GameObject particleSystem = Instantiate(explosionParticle, gameObject.transform.position,Quaternion.identity);
-            //explosionPosition.PlayOneShot(explosionSound);
+            FindObjectOfType<GameController>().TakeDamage(40);
+        }
+        if (explosionEffects != null)
+        {
+            GameObject particleSystem = Instantiate(explosionEffects, gameObject.transform.position, Quaternion.identity);
             Destroy(particleSystem, particleSystem.GetComponent<ParticleSystem>().main.duration);
         }
         Destroy(gameObject);

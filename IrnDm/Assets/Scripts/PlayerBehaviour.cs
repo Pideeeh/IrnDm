@@ -13,6 +13,8 @@ public class PlayerBehaviour : MonoBehaviour {
     public AWeapon DefaultWeaponRight;
     public AWeapon DefaultWeaponLeft;
 
+    public AWeapon SecondaryWeapon;
+
     void Start () {
         EquippedWeaponRight = DefaultWeaponRight;
         EquippedWeaponRight.Equip();
@@ -21,12 +23,16 @@ public class PlayerBehaviour : MonoBehaviour {
     }
 
     void Update () {
-        if (Input.GetMouseButtonUp(0)) { 
+        if (Input.GetMouseButtonDown(0)) {
             FireLeft();
         }
-        if (Input.GetMouseButtonUp(1))
+        if (Input.GetMouseButtonDown(1))
         {
             FireRight();
+        }
+        if (Input.GetKeyUp(KeyCode.M))
+        {
+            SwitchLeftWeapon(SecondaryWeapon);
         }
     }
 
@@ -49,15 +55,11 @@ public class PlayerBehaviour : MonoBehaviour {
         }
     }
 
-    public void PickUpWeapon(AWeapon weapon)
+    public void SwitchLeftWeapon(AWeapon weapon)
     {
-        while (!EquippedWeaponRight.UnEquip() & EquippedWeaponLeft.UnEquip()) {
-            
-        }
-        EquippedWeaponLeft = Instantiate(weapon);
-        EquippedWeaponRight = Instantiate(weapon);
-        Destroy(weapon);
+        GameObject old = GameObject.FindGameObjectWithTag("Hitscan Weapon");
+        Destroy(old);
+        EquippedWeaponLeft = Instantiate(weapon, gameObject.transform);
         EquippedWeaponLeft.Equip();
-        EquippedWeaponRight.Equip();
     }
 }

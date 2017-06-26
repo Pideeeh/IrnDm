@@ -18,7 +18,7 @@ public class PowerUpTarget : MonoBehaviour {
 
     public void OnCollisionEnter(Collision collision)
     {
-        FindObjectOfType<PlayerBehaviour>().PickUpWeapon(Weapon);
+        //FindObjectOfType<PlayerBehaviour>().PickUpWeapon(Weapon);
         Destroy(gameObject);
     }
 }

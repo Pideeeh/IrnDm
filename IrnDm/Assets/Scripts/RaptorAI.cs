@@ -31,24 +31,25 @@ public class RaptorAI : MonoBehaviour, IRayTarget {
 	// Update is called once per frame
 	void Update () {
         UpdateDirection(Finish);
+        UpdateHeight();
 
         if (alive)
         {
-            if (!reported && IsNear(2500f))
+            if (!reported && IsNear(50f))
             {
                 Report();
                 reported = true;
             }
-            if (!IsNear(15f))
+            if (!IsNear(4f))
                 Walk();
             else
                 Attack();
         }
     }
 
-    private bool IsNear(float sqrdistance)
+    private bool IsNear(float distance)
     {
-        return (Mathf.Pow(Finish.transform.position.x - gameObject.transform.position.x,2) + Mathf.Pow(Finish.transform.position.z - gameObject.transform.position.z,2) < sqrdistance);
+        return (Vector3.Distance(Finish.transform.position, gameObject.transform.position) < distance);
     }
 
 
@@ -60,7 +61,7 @@ public class RaptorAI : MonoBehaviour, IRayTarget {
         anim.SetInteger("State", 3);
         if (!source.isPlaying)
         {
-            source.PlayOneShot(raptor_step);
+            source.PlayOneShot(raptor_step,0.3f);
         }
         gameObject.GetComponent<Rigidbody>().velocity = direction.normalized * speed;
     }
@@ -97,6 +98,14 @@ public class RaptorAI : MonoBehaviour, IRayTarget {
         gameObject.transform.rotation = Quaternion.LookRotation(direction);
     }
 
+    public void UpdateHeight()
+    {
+        RaycastHit hit;
+        if (Physics.Raycast(gameObject.transform.position + 0.8f * gameObject.transform.forward.normalized + new Vector3(0, 1, 0), -gameObject.transform.up, out hit))
+            if (hit.distance > 1)
+                gameObject.transform.position -= new Vector3(0, hit.distance - 1, 0);
+    }
+
     private void Report()
     {
         AudioSource HUD_audio = GameObject.Find("HUDCanvas").GetComponent<AudioSource>();
@@ -110,7 +119,7 @@ public class RaptorAI : MonoBehaviour, IRayTarget {
     {
         if (collision.collider.tag == "Projectile")
         {
-            Hit(10);    
+            Hit(100);
         }
     }
 
