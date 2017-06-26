@@ -15,6 +15,7 @@ public class GameController : MonoBehaviour {
     public DifficultyType difficulty;
     public int Score = 0;
     public float Health = 100;
+    public float Armor = 100;
 
     // Use this for initialization
     void Start () {
@@ -32,6 +33,7 @@ public class GameController : MonoBehaviour {
 
     public void StartGame() {
         this.Score = 0;
+        this.Armor = 100;
         this.Health = 100;
         ResumeGame();
     }
@@ -79,11 +81,21 @@ public class GameController : MonoBehaviour {
 
     public void TakeDamage(float damage)
     {
-        Health -= damage;
+        Armor -= damage;
+        if (Armor < 0)
+        {
+            Health += Armor;
+            Armor = 0;
+        }
         if (Health <= 0)
         {
             EndGame();
         }
+    }
+
+    public void ArmorRegeneration()
+    {
+        Armor += 0.1f;
     }
 
 

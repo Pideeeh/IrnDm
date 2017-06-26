@@ -54,6 +54,7 @@ public class TargetBehaviour : MonoBehaviour
         }
         if (Vector3.Distance(gameObject.transform.position, GameObject.FindGameObjectWithTag("Player").transform.position) < 25)
         {
+            FindObjectOfType<GameController>().Armor = 0;
             FindObjectOfType<GameController>().TakeDamage(60);
         }
         FireDestroyParticleSystem(IsImpact);

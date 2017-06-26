@@ -16,10 +16,16 @@ public class HUDController : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
+        UpdateArmor();
         UpdateHealth();
         UpdateScore();
 	}
 
+    public void UpdateArmor()
+    {
+        FindObjectOfType<GameController>().ArmorRegeneration();
+        GameObject.Find("Armorbar").GetComponent<UnityEngine.UI.Slider>().value = FindObjectOfType<GameController>().Armor;
+    }
 
     public void UpdateHealth()
     {
