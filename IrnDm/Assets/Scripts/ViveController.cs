@@ -11,12 +11,31 @@ public class ViveController : MonoBehaviour {
     {
         controller = GetComponent<SteamVR_TrackedController>();
         controller.TriggerClicked += HandleTriggerClicked;
+        controller.TriggerUnclicked += HandleTriggerUnclicked;
+        controller.Gripped += HandleGriped;
+    }
+
+    private void HandleTriggerUnclicked(object sender, ClickedEventArgs e)
+    {
+        GetComponentInChildren<AWeapon>().StopFire();
+        SteamVR_Controller.Input((int)controller.controllerIndex).TriggerHapticPulse();
     }
 
     private void HandleTriggerClicked(object sender, ClickedEventArgs e)
     {
-        GetComponentInChildren<AWeapon>().Fire();
+        GetComponentInChildren<AWeapon>().StartFire();
         SteamVR_Controller.Input((int)controller.controllerIndex).TriggerHapticPulse();
+    }
+
+    private void HandleGriped(object sender, ClickedEventArgs e)
+    {
+        Debug.Log("squeeze");
+        AWeapon[] Weapons = GetComponentsInChildren<AWeapon>(true);
+        foreach(AWeapon current in Weapons)
+        {
+            current.gameObject.SetActive(!current.gameObject.activeSelf);
+                
+        }
     }
 
     private void OnDisable()

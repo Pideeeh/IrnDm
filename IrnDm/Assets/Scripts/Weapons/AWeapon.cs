@@ -17,8 +17,10 @@ public class AWeapon : MonoBehaviour {
 
     private bool isEquiped = true;
     private bool isReloading = false;
+    protected float lastfired;
 
     protected AudioSource WeaponAudioSource;
+    protected bool isFiring = false;
 
     // Use this for initialization
     void Start() {
@@ -27,39 +29,27 @@ public class AWeapon : MonoBehaviour {
 
     // Update is called once per frame
     void Update() {
-
-    }
-
-    public void Fire() {
-        if (isEquiped)
+        if (isFiring && Time.time - lastfired > CoolDown)
         {
-            if (!IsEmpty())
-            {
-                if (!isReloading)
-                {
-                    StartCoroutine(FireProjectile());
-                }
-                else
-                {
-                    PlaySound(NotCooledDown);
-                }
-            }
-            else
-            {
-                PlaySound(EmptySound);
-            }
+            lastfired = Time.time;
+            FireProjectile();
         }
     }
 
-    IEnumerator FireProjectile()
+    public void StartFire() {
+        isFiring = true;
+    }
+    public void StopFire()
+    {
+        isFiring = false;
+    }
+
+    protected void FireProjectile()
     {
         PlaySound(FireSound);
         LaunchProjectile();
         Ammo--;
         PlaySound(ReloadSound);
-        isReloading = true;
-        yield return new WaitForSeconds(CoolDown);
-        isReloading = false;
     }
 
     protected virtual void LaunchProjectile() {
@@ -70,7 +60,7 @@ public class AWeapon : MonoBehaviour {
         projectile.GetComponent<Rigidbody>().velocity = GetAimVector() * projectile.Speed;
     }
 
-    protected AProjectile InstantiateProjectile(Vector3 direction) {
+    protected virtual AProjectile InstantiateProjectile(Vector3 direction) {
        return Instantiate(Projectile,direction, Quaternion.identity);
     }
 
@@ -78,6 +68,7 @@ public class AWeapon : MonoBehaviour {
     {
         return transform.parent.forward;
     }
+
 
     public void Equip() {
         PlaySound(EquipSound);

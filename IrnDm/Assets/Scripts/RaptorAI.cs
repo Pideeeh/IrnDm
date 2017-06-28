@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System;
 
 public class RaptorAI : MonoBehaviour, IRayTarget {
 
@@ -88,6 +89,7 @@ public class RaptorAI : MonoBehaviour, IRayTarget {
         anim.SetInteger("Idle", -1);
         gameObject.GetComponent<Collider>().isTrigger = true;
         gameObject.GetComponent<Rigidbody>().velocity = direction * 0;
+        Array.ForEach(GetComponents<Collider>(), c => c.enabled = false);
         Destroy(gameObject, 5f);
         source.PlayOneShot(raptor_dies);
     }
@@ -125,7 +127,8 @@ public class RaptorAI : MonoBehaviour, IRayTarget {
 
     public void RayHit()
     {
-        Hit(40);
+        Debug.Log("Hit");
+        Hit(5);
     }
 
     private void Hit(int dmg)

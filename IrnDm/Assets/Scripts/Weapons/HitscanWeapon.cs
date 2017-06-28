@@ -18,8 +18,12 @@ public class HitscanWeapon : AWeapon {
 	
 	// Update is called once per frame
 	void Update () {
-		
-	}
+        if (isFiring && Time.time - lastfired > CoolDown)
+        {
+            lastfired = Time.time;
+            FireProjectile();
+        }
+    }
 
     protected override void LaunchProjectile()
     {
@@ -34,10 +38,9 @@ public class HitscanWeapon : AWeapon {
             if (hit.collider != null)
             {
                 IRayTarget target = hit.collider.gameObject.GetComponent<IRayTarget>();
-                if (target != null && !hitObjects.Contains(hit.collider.gameObject))
+                if (target != null)
                 {
                     target.RayHit();
-                    hitObjects.Add(hit.collider.gameObject);
                 }
                 GameObject particleSystem = Instantiate(rayHitParticle, hit.point, Quaternion.identity);
                 Destroy(particleSystem, particleSystem.GetComponent<ParticleSystem>().main.duration);

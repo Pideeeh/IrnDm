@@ -17,9 +17,14 @@ public class PlayerBehaviour : MonoBehaviour {
 
     void Start () {
         EquippedWeaponRight = DefaultWeaponRight;
+        if(EquippedWeaponRight != null)
+        {
         EquippedWeaponRight.Equip();
+        }
         EquippedWeaponLeft = DefaultWeaponLeft;
+        if (EquippedWeaponLeft != null) {
         EquippedWeaponLeft.Equip();
+        }
     }
 
     void Update () {
@@ -37,21 +42,29 @@ public class PlayerBehaviour : MonoBehaviour {
     }
 
     private void FireLeft() {
-        EquippedWeaponLeft.Fire();
-        if (EquippedWeaponLeft.IsEmpty())
+        if(EquippedWeaponLeft != null)
         {
-            EquippedWeaponLeft.UnEquip();
-            EquippedWeaponLeft = DefaultWeaponLeft;
-            EquippedWeaponLeft.Equip();
+            EquippedWeaponLeft.StartFire();
+            if (EquippedWeaponLeft.IsEmpty())
+            {
+                EquippedWeaponLeft.UnEquip();
+                EquippedWeaponLeft = DefaultWeaponLeft;
+                EquippedWeaponLeft.Equip();
+            }
+            EquippedWeaponLeft.StopFire();
         }
+        
     }
     private void FireRight() {
-        EquippedWeaponRight.Fire();
-        if (EquippedWeaponRight.IsEmpty())
-        {
-            EquippedWeaponRight.UnEquip();
-            EquippedWeaponRight = DefaultWeaponRight;
-            EquippedWeaponRight.Equip();
+        if (EquippedWeaponRight != null) {
+            EquippedWeaponRight.StartFire();
+            if (EquippedWeaponRight.IsEmpty())
+            {
+                EquippedWeaponRight.UnEquip();
+                EquippedWeaponRight = DefaultWeaponRight;
+                EquippedWeaponRight.Equip();
+            }
+            EquippedWeaponLeft.StopFire();
         }
     }
 
