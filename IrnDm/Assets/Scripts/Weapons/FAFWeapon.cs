@@ -7,13 +7,12 @@ public class FAFWeapon : AWeapon {
     private bool aimed;
     private GameObject target;
     private LineRenderer Laser;
-    public GameObject Backpack;
 
     // Use this for initialization
     void Start()
     {
         Laser = transform.GetComponentInChildren<LineRenderer>();
-        WeaponAudioSource = gameObject.GetComponent<AudioSource>();
+        WeaponAudioSource = transform.GetComponent<AudioSource>();
     }
 
     // Update is called once per frame
@@ -78,11 +77,10 @@ public class FAFWeapon : AWeapon {
     protected override void LaunchProjectile()
     {
         Quaternion direction = transform.parent.rotation;
-        FAFProjectile projectile = (FAFProjectile) InstantiateProjectile(gameObject.transform.position);
+        FAFProjectile projectile = (FAFProjectile) InstantiateProjectile(transform.position);
         projectile.transform.rotation = direction;
         projectile.transform.Rotate(new Vector3(0, 1, 0), 180);
         projectile.Target = target;
-        projectile.GetComponent<Rigidbody>().velocity = GetAimVector() * projectile.Speed;
     }
 
 }

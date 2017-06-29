@@ -46,6 +46,7 @@ public class AWeapon : MonoBehaviour {
 
     protected void FireProjectile()
     {
+        Debug.Log(FireSound);
         PlaySound(FireSound);
         LaunchProjectile();
         Ammo--;
