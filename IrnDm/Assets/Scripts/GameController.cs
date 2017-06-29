@@ -8,7 +8,7 @@ public class GameController : MonoBehaviour {
 
     public DifficultyParamSet[] difficultyParams;
 
-    public TargetSpawner targetSpawner;
+    private TargetSpawner targetSpawner;
 
     private GameState gameState = GameState.MENU;
     private MenuController menuController;
@@ -20,7 +20,7 @@ public class GameController : MonoBehaviour {
     // Use this for initialization
     void Start () {
         menuController = FindObjectOfType<MenuController>();
-
+        targetSpawner = FindObjectOfType<TargetSpawner>();
     }
 
     // Update is called once per frame

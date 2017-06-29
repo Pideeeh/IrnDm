@@ -29,50 +29,48 @@ public class PlayerBehaviour : MonoBehaviour {
 
     void Update () {
         if (Input.GetMouseButtonDown(0)) {
-            FireLeft();
+            GameObject.Find("LeftHand").transform.GetComponentInChildren<AWeapon>().StartFire();
         }
         if (Input.GetMouseButtonDown(1))
         {
-            FireRight();
+            GameObject.Find("RightHand").transform.GetComponentInChildren<AWeapon>().StartFire();
         }
-        if (Input.GetKeyUp(KeyCode.M))
+        if (Input.GetMouseButtonUp(0))
         {
-            SwitchLeftWeapon(SecondaryWeapon);
+            GameObject.Find("LeftHand").transform.GetComponentInChildren<AWeapon>().StopFire();
+        }
+        if (Input.GetMouseButtonUp(1))
+        {
+            GameObject.Find("RightHand").transform.GetComponentInChildren<AWeapon>().StopFire();
+        }
+        if (Input.GetKeyUp(KeyCode.Q))
+        {
+            SwitchLeftWeapon();
+        }
+        if (Input.GetKeyUp(KeyCode.E))
+        {
+            SwitchRightWeapon();
         }
     }
 
-    private void FireLeft() {
-        if(EquippedWeaponLeft != null)
-        {
-            EquippedWeaponLeft.StartFire();
-            if (EquippedWeaponLeft.IsEmpty())
-            {
-                EquippedWeaponLeft.UnEquip();
-                EquippedWeaponLeft = DefaultWeaponLeft;
-                EquippedWeaponLeft.Equip();
-            }
-            EquippedWeaponLeft.StopFire();
-        }
-        
-    }
-    private void FireRight() {
-        if (EquippedWeaponRight != null) {
-            EquippedWeaponRight.StartFire();
-            if (EquippedWeaponRight.IsEmpty())
-            {
-                EquippedWeaponRight.UnEquip();
-                EquippedWeaponRight = DefaultWeaponRight;
-                EquippedWeaponRight.Equip();
-            }
-            EquippedWeaponLeft.StopFire();
-        }
-    }
 
-    public void SwitchLeftWeapon(AWeapon weapon)
+    public void SwitchLeftWeapon()
     {
-        GameObject old = GameObject.FindGameObjectWithTag("Hitscan Weapon");
-        Destroy(old);
-        EquippedWeaponLeft = Instantiate(weapon, gameObject.transform);
-        EquippedWeaponLeft.Equip();
+        AWeapon[] Weapons = GameObject.Find("LeftHand").transform.GetComponentsInChildren<AWeapon>(true);
+        foreach (AWeapon current in Weapons)
+        {
+            current.gameObject.SetActive(!current.gameObject.activeSelf);
+
+        }
+    }
+
+    public void SwitchRightWeapon()
+    {
+        AWeapon[] Weapons = GameObject.Find("RightHand").transform.GetComponentsInChildren<AWeapon>(true);
+        foreach (AWeapon current in Weapons)
+        {
+            current.gameObject.SetActive(!current.gameObject.activeSelf);
+
+        }
     }
 }
