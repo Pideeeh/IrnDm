@@ -64,7 +64,7 @@ public class RaptorAI : MonoBehaviour, IRayTarget {
         {
             source.PlayOneShot(raptor_step,0.3f);
         }
-        gameObject.GetComponent<Rigidbody>().velocity = direction.normalized * speed;
+        gameObject.transform.position += direction.normalized * speed/100;
     }
 
     private void Attack()
@@ -127,17 +127,17 @@ public class RaptorAI : MonoBehaviour, IRayTarget {
 
     public void RayHit()
     {
-        Debug.Log("Hit");
-        Hit(5);
+        Hit(7);
     }
 
     private void Hit(int dmg)
     {
         Health -= dmg;
+        
         if (Health <= 0 && alive)
         {
-            FindObjectOfType<GameController>().ScorePoints(7);
             FireDestroyParticleSystem();
+            FindObjectOfType<GameController>().ScorePoints(7);
             Dies();
         }
     }

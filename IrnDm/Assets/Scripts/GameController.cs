@@ -35,6 +35,7 @@ public class GameController : MonoBehaviour {
         this.Score = 0;
         this.Armor = 100;
         this.Health = 100;
+        gameObject.GetComponent<AudioSource>().Play();
         ResumeGame();
     }
 
@@ -56,6 +57,7 @@ public class GameController : MonoBehaviour {
         targetSpawner.StopSpawning();
         Array.ForEach(GameObject.FindGameObjectsWithTag("Dino"), dino => Destroy(dino));
         Array.ForEach(GameObject.FindGameObjectsWithTag("Target"), target => Destroy(target));
+        gameObject.GetComponent<AudioSource>().Stop();
         this.gameState = GameState.ENDED;
     }
 
