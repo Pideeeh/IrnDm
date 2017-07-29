@@ -40,7 +40,7 @@ public class MenuController : MonoBehaviour {
                 }
                 break;
             case MenuItemType.Exit:
-                Debug.Log("EXIT"); //TODO swapped out with halt command
+                Debug.Log("EXIT");
                 break;
         }
     }

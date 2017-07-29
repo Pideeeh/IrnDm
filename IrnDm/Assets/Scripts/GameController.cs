@@ -7,9 +7,7 @@ public enum GameState { MENU, PLAYING, PAUSED, ENDED }
 public class GameController : MonoBehaviour {
 
     public DifficultyParamSet[] difficultyParams;
-
     private TargetSpawner targetSpawner;
-
     private GameState gameState = GameState.MENU;
     private MenuController menuController;
     public DifficultyType difficulty;
